@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Monochrome</string>
+
+    <string name="open_gallery">Open\nGallery</string>
+    <string name="launch_camera">Launch\nCamera</string>
+    <string name="process_image">Process Image</string>
+    <string name="selected_image_preview">Selected image preview</string>
+    <string name="the_processed_picture">The processed picture</string>
+    <string name="the_unprocessed_picture">The unprocessed picture</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="processing">Processing…</string>
+    <string name="save_success">Image has been successfully saved to your Gallery!</string>
+    <string name="save_error">There\'s something wrong when saving the file. Please report this by contacting our developer.</string>
+    <string name="no_image_error">Please load image first!</string>
+    <string name="threshold">Threshold</string>
+    <string name="gaussian">Gaussian</string>
+</resources>

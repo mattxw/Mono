@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingBottom="80dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingTop="80dp"
+    tools:context="space.twobit.mono.ImageSelectionActivity">
+
+    <ImageView
+        android:id="@+id/imageViewPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:contentDescription="@string/selected_image_preview"
+        android:visibility="visible" />
+
+    <LinearLayout
+        style="@style/ImageSelectionButtonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonOpenGallery"
+                style="@style/ImageSelectionButtonBar.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/ic_gallery"
+                android:text="@string/open_gallery" />
+
+            <Button
+                android:id="@+id/buttonLaunchCamera"
+                style="@style/ImageSelectionButtonBar.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableTop="@drawable/ic_camera"
+                android:text="@string/launch_camera" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonProcess"
+            style="@style/ImageSelectionButtonBar.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/process_image" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -28,62 +28,6 @@ import java.util.*
 
 class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Bitmap> {
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Bitmap> {
-
-        val options = BitmapFactory.Options()
-        options.inSampleSize = 8
-        // Get the file that has been chosen by the user
-        val bitmap = BitmapFactory.decodeFile((File(this@ImageProcessingActivity.workingFileUri!!.path)).toString(), options)
-
-        // Create a new Loader
-        val loader = ImageProcessLoader(this, bitmap, (seekBar.progress * 2.54 + 1).toInt())
-        loader.isThreshold = btn_threshold.isChecked
-        loader.isGaussian = btn_gaussian.isChecked
-
-        return loader
-    }
-
-    override fun onLoadFinished(loader: Loader<Bitmap>, data: Bitmap?) {
-        // Show the images into imageViewAfter view after loader finished its processes
-        Glide.with(applicationContext)
-                .asBitmap()
-                .load(data)
-                .into(imageViewAfter)
-
-        // Hide processing view
-        pb_processing.visibility = View.INVISIBLE
-
-        // Copy the image (resultBitmap will be collected by garbage collector, so we need to copy it)
-        resultBitmap = data?.copy(data.config, true)
-    }
-
-    override fun onLoaderReset(loader: Loader<Bitmap>) {
-        // Hide processing view
-        pb_processing.visibility = View.INVISIBLE
-    }
-
-//
-//    @BindView(R.id.rl_image_wrapper)
-//    internal var imageWrapper: RelativeLayout? = null
-//
-//    @BindView(R.id.imageViewBefore)
-//    internal var imageViewBefore: ImageView? = null
-//
-//    @BindView(R.id.imageViewAfter)
-//    internal var imageViewAfter: ImageView? = null
-//
-//    @BindView(R.id.seekBar)
-//    internal var threshold: SeekBar? = null
-//
-//    @BindView(R.id.pb_processing)
-//    internal var tvProcessing: ProgressBar? = null
-//
-//    @BindView(R.id.btn_threshold)
-//    internal var thresholdToggle: ToggleButton? = null
-//
-//    @BindView(R.id.btn_gaussian)
-//    internal var gaussianToggle: ToggleButton? = null
-
     private var workingFileUri: Uri? = null
     private var resultBitmap: Bitmap? = null
 
@@ -232,9 +176,43 @@ class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbac
         internal var isGaussian = true
 
         override fun loadInBackground(): Bitmap? {
-            return ImageUtils.process(bitmap, if (isThreshold) threshold else -1, isGaussian)
+            return ImageUtils.grayscale(bitmap, if (isThreshold) threshold else -1)
         }
 
+    }
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Bitmap> {
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 8
+        // Get the file that has been chosen by the user
+        val bitmap = BitmapFactory.decodeFile((File(this@ImageProcessingActivity.workingFileUri!!.path)).toString(), options)
+
+        // Create a new Loader
+        val loader = ImageProcessLoader(this, bitmap, (seekBar.progress * 2.54 + 1).toInt())
+        loader.isThreshold = btn_threshold.isChecked
+        loader.isGaussian = btn_gaussian.isChecked
+
+        return loader
+    }
+
+    override fun onLoadFinished(loader: Loader<Bitmap>, data: Bitmap?) {
+        // Show the images into imageViewAfter view after loader finished its processes
+        Glide.with(applicationContext)
+                .asBitmap()
+                .load(data)
+                .into(imageViewAfter)
+
+        // Hide processing view
+        pb_processing.visibility = View.INVISIBLE
+
+        // Copy the image (resultBitmap will be collected by garbage collector, so we need to copy it)
+        resultBitmap = data?.copy(data.config, true)
+    }
+
+    override fun onLoaderReset(loader: Loader<Bitmap>) {
+        // Hide processing view
+        pb_processing.visibility = View.INVISIBLE
     }
 
     companion object {

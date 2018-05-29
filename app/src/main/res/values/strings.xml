@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Monochrome</string>
+    <string name="app_name">Mono</string>
 
     <string name="open_gallery">Open\nGallery</string>
     <string name="launch_camera">Launch\nCamera</string>

@@ -79,18 +79,19 @@
             android:orientation="horizontal">
 
             <ToggleButton
-                android:id="@+id/btn_threshold"
+                android:id="@+id/btn_negative"
                 style="@style/ImageSelectionButtonBar.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:drawableTop="@drawable/ic_text_format_black_24px"
+                android:drawableTop="@drawable/baseline_invert_colors_black_18dp"
+                android:drawableTint="@android:color/white"
                 android:hint="@string/threshold"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <ToggleButton
-                android:id="@+id/btn_gaussian"
+                android:id="@+id/btn_grayscale"
                 style="@style/ImageSelectionButtonBar.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,7 +100,7 @@
                 android:drawablePadding="@dimen/btn_image_processing_padding"
                 android:drawableTop="@drawable/ic_adjust_black_24px"
                 android:hint="@string/gaussian"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/btn_save"

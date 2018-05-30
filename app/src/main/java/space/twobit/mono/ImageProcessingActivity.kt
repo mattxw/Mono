@@ -67,7 +67,7 @@ class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbac
         })
         reloadLoader()
 
-        btn_gaussian.setOnCheckedChangeListener { _, _ ->
+        btn_grayscale.setOnCheckedChangeListener { _, _ ->
             reloadLoader()
         }
 
@@ -75,7 +75,7 @@ class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbac
             hideBeforeImage(event)
         }
 
-        btn_threshold.setOnCheckedChangeListener { buttonView, isChecked -> thresholdButtonClicked(buttonView as ToggleButton, isChecked) }
+        btn_negative.setOnCheckedChangeListener { buttonView, isChecked -> thresholdButtonClicked(buttonView as ToggleButton, isChecked) }
         btn_save.setOnClickListener { openSave() }
         btn_share.setOnClickListener { openShareMenu() }
     }
@@ -172,11 +172,11 @@ class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbac
      * so it doesn't block main thread for slower devices
      */
     private class ImageProcessLoader(context: Context, val bitmap: Bitmap, val threshold: Int) : AsyncTaskLoader<Bitmap>(context) {
-        internal var isThreshold = true
-        internal var isGaussian = true
+        internal var isNegative = true
+        internal var isGrayscale = true
 
         override fun loadInBackground(): Bitmap? {
-            return ImageUtils.grayscale(bitmap, if (isThreshold) threshold else -1)
+            return ImageUtils.process(bitmap, isGrayscale, isNegative)
         }
 
     }
@@ -190,8 +190,8 @@ class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbac
 
         // Create a new Loader
         val loader = ImageProcessLoader(this, bitmap, (seekBar.progress * 2.54 + 1).toInt())
-        loader.isThreshold = btn_threshold.isChecked
-        loader.isGaussian = btn_gaussian.isChecked
+        loader.isNegative = btn_negative.isChecked
+        loader.isGrayscale = btn_grayscale.isChecked
 
         return loader
     }

@@ -2,9 +2,12 @@ package space.twobit.mono.helpers
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.util.Log
 
 import org.opencv.android.Utils
+import org.opencv.core.Core
 import org.opencv.core.Mat
+import org.opencv.core.Scalar
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 
@@ -59,18 +62,19 @@ object ImageUtils {
         return outputBitmap
     }
 
-    fun grayscale(bitmap: Bitmap, threshold: Int): Bitmap {
+    fun process(bitmap: Bitmap, grayscale: Boolean, negative: Boolean): Bitmap {
         val imageMat = Mat()
         Utils.bitmapToMat(bitmap, imageMat)
 
         // Process smaller image
         Imgproc.resize(imageMat, imageMat, Size(1024.0, (imageMat.height() * 1024 / imageMat.width()).toDouble()))
+        Imgproc.cvtColor(imageMat, imageMat, if (grayscale) Imgproc.COLOR_RGB2GRAY else Imgproc.COLOR_RGBA2RGB)
 
-        //        Imgproc.cvtColor(imageMat, imageMat, Imgproc.COLOR_BGR2GRAY);
-        //        Imgproc.GaussianBlur(imageMat, imageMat, new Size(45, 45), 0);
-        //        Imgproc.adaptiveThreshold(imageMat, imageMat, 50, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 5, 25);
-
-        Imgproc.cvtColor(imageMat, imageMat, Imgproc.COLOR_RGB2GRAY)
+        if (negative) {
+            val scalarMatrix = Mat(imageMat.rows(), imageMat.cols(), imageMat.type(), Scalar(255.0, 255.0, 255.0))
+            Core.subtract(scalarMatrix, imageMat, imageMat)
+            scalarMatrix.release() // Release the memory
+        }
 
         val outputBitmap = Bitmap.createBitmap(imageMat.cols(), imageMat.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(imageMat, outputBitmap)

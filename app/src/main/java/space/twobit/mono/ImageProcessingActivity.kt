@@ -110,7 +110,7 @@ class ImageProcessingActivity : AppCompatActivity(), LoaderManager.LoaderCallbac
     }
 
     fun thresholdButtonClicked(button: ToggleButton, checked: Boolean) {
-        seekBar.visibility = if (checked) View.VISIBLE else View.GONE
+//        seekBar.visibility = if (checked) View.VISIBLE else View.GONE
         reloadLoader()
     }
 
